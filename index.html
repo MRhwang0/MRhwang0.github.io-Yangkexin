@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>传统与科技的融合：学生绘画与AI广绣艺术</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", "STKaiti", sans-serif;
+            background: linear-gradient(135deg, #f8e8d0 0%, #f5e6d9 100%);
+            background-image: 
+                radial-gradient(#d9a77a 2px, transparent 2px),
+                radial-gradient(#d9a77a 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: #5a3921;
+            line-height: 1.6;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 Q50,5 80,20 T100,50 T80,80 T50,100 T20,80 T0,50 T20,20 Z" fill="none" stroke="%23d9a77a" stroke-width="0.5" opacity="0.2"/></svg>') repeat;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .silk-border {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><path d="M10,10 Q100,5 190,10 T200,100 T190,190 T100,200 T10,190 T0,100 T10,10 Z" fill="none" stroke="%23a52a2a" stroke-width="2" stroke-dasharray="5,3"/></svg>') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #8b0000;
+            text-shadow: 2px 2px 4px rgba(139, 0, 0, 0.3);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+        
+        h1::before, h1::after {
+            content: "✻";
+            color: #d9a77a;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.8rem;
+        }
+        
+        h1::before {
+            left: -10px;
+        }
+        
+        h1::after {
+            right: -10px;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #5a3921;
+            max-width: 800px;
+            margin: 0 auto;
+            font-style: italic;
+            background: rgba(245, 230, 217, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 介绍区域 */
+        .intro {
+            background: rgba(255, 253, 250, 0.9);
+            border: 2px solid #d9a77a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M20,20 Q50,5 80,20 T100,50 T80,80 T50,100 T20,80 T0,50 T20,20 Z" fill="none" stroke="%23a52a2a" stroke-width="0.5" opacity="0.1"/></svg>');
+            z-index: -1;
+        }
+        
+        .intro h2 {
+            text-align: center;
+            color: #8b0000;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        .intro h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: #d9a77a;
+            margin: 10px auto;
+            border-radius: 3px;
+        }
+        
+        .intro p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-indent: 2em;
+        }
+        
+        /* 作品展示区 */
+        .gallery-section {
+            margin-bottom: 50px;
+        }
+        
+        .gallery-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #8b0000;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .gallery-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, #d9a77a, #8b0000, #d9a77a);
+            border-radius: 3px;
+        }
+        
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .artwork-card {
+            background: rgba(255, 253, 250, 0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid #d9a77a;
+        }
+        
+        .artwork-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .artwork-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #8b0000, #d9a77a, #8b0000);
+        }
+        
+        .image-container {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .artwork-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-container:hover .artwork-img {
+            transform: scale(1.05);
+        }
+        
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(90, 57, 33, 0.85);
+            color: #f8e8d0;
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container:hover .overlay {
+            transform: translateY(0);
+        }
+        
+        .artwork-info {
+            padding: 20px;
+        }
+        
+        .artwork-title {
+            font-size: 1.4rem;
+            color: #8b0000;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .artist {
+            font-style: italic;
+            color: #5a3921;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .artwork-desc {
+            color: #5a3921;
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 2px dashed #d9a77a;
+            color: #5a3921;
+            font-size: 1rem;
+        }
+        
+        /* 全屏模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid #d9a77a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(217, 167, 122, 0.5);
+        }
+        
+        .modal-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f8e8d0;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #d9a77a;
+        }
+        
+        /* 装饰元素 */
+        .decoration {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .phoenix {
+            top: 50px;
+            right: 50px;
+            width: 150px;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 C60,20 70,30 80,40 C90,50 95,60 90,70 C85,80 75,85 65,80 C55,75 45,65 40,55 C35,45 30,35 25,25 C20,15 15,10 20,5 C25,0 35,5 45,15 C55,25 60,30 50,10 Z" fill="%238B0000"/></svg>') no-repeat;
+        }
+        
+        .flower {
+            bottom: 100px;
+            left: 50px;
+            width: 120px;
+            height: 120px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23d9a77a" opacity="0.5"/><circle cx="35" cy="35" r="15" fill="%238B0000" opacity="0.5"/><circle cx="65" cy="35" r="15" fill="%238B0000" opacity="0.5"/><circle cx="35" cy="65" r="15" fill="%238B0000" opacity="0.5"/><circle cx="65" cy="65" r="15" fill="%238B0000" opacity="0.5"/></svg>') no-repeat;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .decoration {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰元素 -->
+    <div class="decoration phoenix"></div>
+    <div class="decoration flower"></div>
+    
+    <div class="container">
+        <header>
+            <div class="silk-border"></div>
+            <h1>传统与科技的融合</h1>
+            <p class="subtitle">学生绘画与AI广绣艺术展示</p>
+        </header>
+        
+        <section class="intro">
+            <h2>艺术与科技的交汇</h2>
+            <p>广绣，作为中国四大名绣之一，拥有两千多年的悠久历史，以其色彩鲜艳、构图饱满、针法多变而闻名于世。本展览展示了如何将传统广绣艺术与现代人工智能技术相结合，创造出令人惊叹的艺术作品。</p>
+            <p>学生们创作的精美绘画作品，经过AI算法的深度学习和转化，被重新诠释为具有广绣特色的数字艺术作品。AI系统分析了传统广绣的针法、色彩搭配和构图特点，将学生的画作转化为具有刺绣质感的新作品。</p>
+            <p>这一创新过程不仅保留了传统广绣的艺术精髓，还为学生作品赋予了新的表现形式和艺术价值，展现了传统文化与现代科技的完美融合。</p>
+        </section>
+        
+        <section class="gallery-section">
+            <h2 class="gallery-title">学生原作与AI刺绣</h2>
+            <div class="gallery-container">
+                <!-- 作品1 -->
+                <div class="artwork-card">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1543857778-c4a1a569e7bd?q=80&w=600" alt="江南水乡" class="artwork-img">
+                        <div class="overlay">
+                            <p>点击图片查看全屏效果</p>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">江南水乡</h3>
+                        <p class="artist">作者：李思涵（12岁）</p>
+                        <p class="artwork-desc">这幅作品描绘了江南水乡的宁静美景，小桥流水，白墙黛瓦，展现了学生对传统建筑的独特理解。AI刺绣版本使用了12种不同针法，耗时120小时生成。</p>
+                    </div>
+                </div>
+                
+                <!-- 作品2 -->
+                <div class="artwork-card">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1558637845-c8b7ead71a3e?q=80&w=600" alt="四季花鸟" class="artwork-img">
+                        <div class="overlay">
+                            <p>点击图片查看全屏效果</p>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">四季花鸟</h3>
+                        <p class="artist">作者：王明哲（14岁）</p>
+                        <p class="artwork-desc">作品以四季为主题，描绘了不同季节的花卉与鸟类。AI刺绣版本采用了传统广绣的"抢针"技法，使用超过50种不同颜色的丝线模拟效果。</p>
+                    </div>
+                </div>
+                
+                <!-- 作品3 -->
+                <div class="artwork-card">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1515405295579-ba7b45403062?q=80&w=600" alt="神话传说" class="artwork-img">
+                        <div class="overlay">
+                            <p>点击图片查看全屏效果</p>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">神话传说</h3>
+                        <p class="artist">作者：张雨欣（13岁）</p>
+                        <p class="artwork-desc">这幅作品灵感来源于中国神话故事，描绘了嫦娥奔月的场景。AI刺绣版本运用了"盘金"技法，使画面中的月亮和云彩呈现出金属光泽。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="gallery-section">
+            <h2 class="gallery-title">AI刺绣细节展示</h2>
+            <div class="gallery-container">
+                <!-- AI刺绣1 -->
+                <div class="artwork-card">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=600" alt="AI刺绣细节1" class="artwork-img">
+                        <div class="overlay">
+                            <p>点击图片查看全屏效果</p>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">针法模拟</h3>
+                        <p class="artist">AI算法：广绣针法生成器</p>
+                        <p class="artwork-desc">AI系统分析了传统广绣的32种基本针法，根据原画内容自动选择最合适的针法组合，模拟出真实的刺绣效果。</p>
+                    </div>
+                </div>
+                
+                <!-- AI刺绣2 -->
+                <div class="artwork-card">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1528190336454-13cd56b45b5a?q=80&w=600" alt="AI刺绣细节2" class="artwork-img">
+                        <div class="overlay">
+                            <p>点击图片查看全屏效果</p>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">色彩转换</h3>
+                        <p class="artist">AI算法：丝线色彩匹配</p>
+                        <p class="artwork-desc">AI将绘画中的色彩转换为最接近的传统广绣丝线颜色，并考虑光线反射效果，使数字刺绣具有真实的丝线光泽感。</p>
+                    </div>
+                </div>
+                
+                <!-- AI刺绣3 -->
+                <div class="artwork-card">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=600" alt="AI刺绣细节3" class="artwork-img">
+                        <div class="overlay">
+                            <p>点击图片查看全屏效果</p>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <h3 class="artwork-title">纹理生成</h3>
+                        <p class="artist">AI算法：布料纹理模拟</p>
+                        <p class="artwork-desc">系统模拟了不同布料材质上的刺绣效果，包括丝绸、棉布和麻布等，使数字作品具有真实的材质感。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>智小启人工智能教育平台 © 2026 | 传统艺术与科技创新展示</p>
+    </footer>
+    
+    <!-- 全屏模态框 -->
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+    
+    <script>
+        // 图片全屏显示功能
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById("modalImage");
+        const closeModal = document.getElements
